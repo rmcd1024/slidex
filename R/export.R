@@ -15,17 +15,19 @@
 convert_pptx <- function(path, author = NULL, title = NULL, sub = NULL,
                          date = Sys.Date(), theme = "default",
                          highlightStyle = "github", force = FALSE,
-                         writenotes = TRUE, out_dir = ".") {
+                         writenotes = TRUE, out_dir = ".",
+                         output_format = c('xaringan', 'latex')) {
 
-  if(!file.exists(path)) {
-    stop(paste0("Cannot find file ", basename(path), " in directory",
+    if(!file.exists(path)) {
+        stop(paste0("Cannot find file ", basename(path), " in directory",
                 "'", dirname(path), "'",
                 ". ", "Note - file paths must be specified with the '.pptx'",
                 "extension."))
-  }
-  xml <- extract_xml(path, force = force)
-  folder <- gsub("\\.pptx", "", basename(path))
-  basepath <- dirname(xml)
+    }
+    output_format <-  match.arg(output_format,  c('xaringan', 'latex'))
+    xml <- extract_xml(path, force = force)
+    folder <- gsub("\\.pptx", "", basename(path))
+    basepath <- dirname(xml)
 
   if(file.exists(file.path(out_dir, folder)) & force == FALSE) {
     stop(
@@ -62,7 +64,7 @@ convert_pptx <- function(path, author = NULL, title = NULL, sub = NULL,
   sink_error <- withCallingHandlers(
     write_rmd(xml, rmd, slds, rels,
              title_sld, author, title, sub, date, theme,
-             highlightStyle),
+             highlightStyle, output_format),
     error = function(e) e
   )
 
@@ -76,7 +78,7 @@ convert_pptx <- function(path, author = NULL, title = NULL, sub = NULL,
   }
 
   if(writenotes) {
-    write_notes(xml)
+    write_notes(xml, output_format)
   }
 
   unlink(xml, recursive = TRUE)

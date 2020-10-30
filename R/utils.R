@@ -249,7 +249,7 @@ extract_notes <- function(notes, sld_num, inslides = TRUE) {
 #' @param xml_folder The folder containing all of the xml code from the pptx.
 #' @keywords internal
 #'
-write_notes <- function(xml_folder) {
+write_notes <- function(xml_folder, output_format = 'xaringan') {
   notes <- import_notes_xml(xml_folder)
   n_slides <- length(
     list.files(file.path(xml_folder, "ppt", "slides"),
@@ -283,19 +283,20 @@ write_notes <- function(xml_folder) {
 
 write_rmd <- function(xml_folder, rmd, slds, rels,
                       title_sld, author, title, sub, date, theme,
-                      highlightStyle) {
+                      highlightStyle, output_format) {
 
   sld_notes <- import_notes_xml(xml_folder)
 
   sink(rmd)
   cat(
     create_yaml(xml_folder, title_sld, author, title, sub, date, theme,
-                highlightStyle)
+                highlightStyle, output_format)
   )
   pmap(list(.x = slds, .y = rels, .z = seq_along(slds)),
        function(.x, .y, .z)
-         cat("\n---",
-             extract_title(.x),
+           cat(paste0(newslide[output_format], extract_title(.x)),
+             ## "\n---",
+             ## extract_title(.x),
              extract_body(.x),
              tribble_code(extract_table(.x), tbl_num = .z),
              extract_image(.x, .y),

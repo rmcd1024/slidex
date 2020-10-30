@@ -43,7 +43,7 @@ write_theme <- function(theme) {
 
 create_yaml <- function(xml_folder, title_sld, author = NULL, title = NULL,
                         sub = NULL, date = Sys.Date(), theme = "default",
-                        highlightStyle = "github") {
+                        highlightStyle = "github", output_format) {
   if(is.null(author)) {
     author <- extract_author(xml_folder)
   }
@@ -63,7 +63,7 @@ create_yaml <- function(xml_folder, title_sld, author = NULL, title = NULL,
   hls  <- paste0("highlightStyle: ",  highlightStyle)
 
   if(theme != "default") {
-    css  <- write_theme(theme)
+    css <- write_theme(theme)
   } else {
     css <- NULL
   }
@@ -79,17 +79,25 @@ create_yaml <- function(xml_folder, title_sld, author = NULL, title = NULL,
                    ttl,
                    sub,
                    auth,
-                   date,
-                   "output:",
-                   "  xaringan::moon_reader:",
-                   css,
-                   "  lib_dir: libs",
-                   "  nature:",
-                   paste0("    ", hls),
-                   "    highlightLines: true",
-                   "    countIncrementalSlides: false")
-  elements <- elements[!map_lgl(elements, is.null)]
+                   date)
+  xaringan.yaml <- list("output:",
+                        "  xaringan::moon_reader:",
+                        css,
+                        "  lib_dir: libs",
+                        "  nature:",
+                        paste0("    ", hls),
+                        "    highlightLines: true",
+                        "    countIncrementalSlides: false")
+  latex.yaml <- list("output:",
+                     "  beamer_presentation: default",
+                     "---", "\n")
+  if (output_format == 'latex') {
+      header <- c(elements, latex.yaml)
+  } else {
+      header <- c(elements, xaringan.yaml)
+  }
+  header <- header[!map_lgl(header, is.null)]
 
-  paste0(elements, collapse = "\n")
+  paste0(header, collapse = "\n")
 }
 
