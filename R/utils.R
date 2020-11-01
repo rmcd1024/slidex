@@ -281,16 +281,16 @@ write_notes <- function(xml_folder, output_format = 'xaringan') {
 #'   \code{import_rel_xml}.
 #' @keywords internal
 
-write_rmd <- function(xml_folder, rmd, slds, rels,
+write_rmd <- function(xml_folder, rmd, slds, rels, output_format,
                       title_sld, author, title, sub, date, theme,
-                      highlightStyle, output_format) {
+                      highlightStyle) {
 
   sld_notes <- import_notes_xml(xml_folder)
 
   sink(rmd)
   cat(
-    create_yaml(xml_folder, title_sld, author, title, sub, date, theme,
-                highlightStyle, output_format)
+      create_yaml(xml_folder, title_sld, output_format, author, title, sub,
+                  date, theme, highlightStyle)
   )
   pmap(list(.x = slds, .y = rels, .z = seq_along(slds)),
        function(.x, .y, .z)
@@ -299,7 +299,7 @@ write_rmd <- function(xml_folder, rmd, slds, rels,
              ## extract_title(.x),
              extract_body(.x),
              tribble_code(extract_table(.x), tbl_num = .z),
-             extract_image(.x, .y),
+             extract_image(.x, .y, output_format),
              extract_link(.x, .y),
              extract_footnote(.x),
              extract_notes(sld_notes, .z + 1),

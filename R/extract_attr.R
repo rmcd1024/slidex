@@ -27,7 +27,7 @@ extract_link <- function(sld, rel) {
 # from command line
 # libreoffice --headless --convert-to png image.emf
 
-extract_image <- function(sld, rel) {
+extract_image <- function(sld, rel, output_format) {
   sld_ids <- xml_find_all(sld, "//p:pic/p:blipFill/a:blip") %>%
     xml_attr(., "embed")
   if(length(sld_ids) == 0) {
@@ -38,15 +38,34 @@ extract_image <- function(sld, rel) {
     .[rel_ids %in% sld_ids] %>%
     map_chr(basename)
 
-    out <- paste0("![](assets/img/", imgs, ")")
-    if(length(out) == 2) {
-      out <- paste0(".pull-left[", out[1], "]", "\n\n",
-                    ".pull-right[", out[2], "]")
-    }
-    if(length(out) > 2) {
-      out <- paste0("\n---\nclass: inverse\nbackground-image: url('assets/img/",
-                    imgs, "')\nbackground-size: cover\n",
-                    collapse = "\n")
-    }
+  out <- paste0("![](assets/img/", imgs, ")")
+  if (output_format == 'xaringan') {
+      if(length(out) == 2) {
+          out <- paste0(".pull-left[", out[1], "]", "\n\n",
+                        
+                        ".pull-right[", out[2], "]")
+      }
+      if(length(out) > 2) {
+        out <- paste0("\n---\nclass: inverse\nbackground-image: url('assets/img/",
+                      imgs, "')\nbackground-size: cover\n",
+                      collapse = "\n")
+      }
+      
+  }
+    if (output_format == 'latex') {
+      if(length(out) == 2) {
+          out <- paste0(out[1], out[2])
+      }
+      if(length(out) > 2) {
+          k <- length(out)
+          tmp <- vector(length = k)
+          for (i in 1:k) {
+              out[i] <- paste0(out[i], "{width=", (1/k)^1.25*100, "%}")
+          }
+          out <- paste0("\n\n", paste0(out, collapse = ""))
+      }
+      
+  }
+
   out
 }

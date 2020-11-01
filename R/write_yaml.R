@@ -41,9 +41,10 @@ write_theme <- function(theme) {
 #'   \code{"github"} flavored highlighting
 #' @keywords internal
 
-create_yaml <- function(xml_folder, title_sld, author = NULL, title = NULL,
+create_yaml <- function(xml_folder, title_sld, output_format,
+                        author = NULL, title = NULL,
                         sub = NULL, date = Sys.Date(), theme = "default",
-                        highlightStyle = "github", output_format) {
+                        highlightStyle = "github") {
   if(is.null(author)) {
     author <- extract_author(xml_folder)
   }
@@ -91,7 +92,7 @@ create_yaml <- function(xml_folder, title_sld, author = NULL, title = NULL,
   latex.yaml <- list("output:",
                      "  beamer_presentation: default",
                      "---", "\n")
-  if (output_format == 'latex') {
+  if (output_format == "latex") {
       header <- c(elements, latex.yaml)
   } else {
       header <- c(elements, xaringan.yaml)
@@ -100,4 +101,3 @@ create_yaml <- function(xml_folder, title_sld, author = NULL, title = NULL,
 
   paste0(header, collapse = "\n")
 }
-

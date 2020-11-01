@@ -62,9 +62,9 @@ convert_pptx <- function(path, author = NULL, title = NULL, sub = NULL,
   rmd <- file.path(basepath, paste0(folder, ".Rmd"))
 
   sink_error <- withCallingHandlers(
-    write_rmd(xml, rmd, slds, rels,
+    write_rmd(xml, rmd, slds, rels, output_format,
              title_sld, author, title, sub, date, theme,
-             highlightStyle, output_format),
+             highlightStyle),
     error = function(e) e
   )
 
