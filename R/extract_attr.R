@@ -50,10 +50,9 @@ extract_image <- function(sld, rel, output_format) {
                       imgs, "')\nbackground-size: cover\n",
                       collapse = "\n")
       }
-
   }
-    if (output_format == 'latex') {
-      out <- gsub('.wmf', '.png', out, ignore.case=TRUE)
+  if (output_format == 'latex') {
+      out <- gsub('\\.wmf|\\.emf', '\\.png', out, ignore.case=TRUE)
       if(length(out) == 2) {
           out <- paste0(out[1], "{width=", .5^1.2*100, "%}",
                         out[2], "{width=", .5^1.2*100, "%}")

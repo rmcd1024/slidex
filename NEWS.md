@@ -1,12 +1,13 @@
 # Version 0.0.0.9002
 
 
-`slidex` does a fantastic job of converting pptx to `xaringan`-flavored
-markdown. This is a fork of version 0.0.0.9001, which adds the parameter
-`output_format` to the `convert_pptx` function. The value can be
-either `xaringan` (default) or `latex` (Beamer). 
+`slidex` does a fantastic job of converting pptx to
+`xaringan`-flavored markdown. This is a fork of version 0.0.0.9001,
+which enables conversion to pdf (Beamer). The top-level change is to
+add the parameter `output_format` to the `convert_pptx` function. The
+value can be either `xaringan` (default) or `latex` (Beamer).
 
-## What does this extension accomplish?
+## Specificscc
 
 If `xaringan` is specified, the output should be identical to that in
 version 0.0.0.9001. If `latex` is specified, differences are as
@@ -15,6 +16,7 @@ follows:
 * the YAML header specifies beamer output and incorporates beamer
   options, including xelatex compilation (to handle unicode created in
   the translation from pptx) and slide-level
+* `xaringan` slide transition code (`---`) is eliminated
 * slide heads are changed from `#` to `##` and `slide_level=2` is
   added to the YAML header
 * references to `.wmf` graphics are changed to `.png`
@@ -29,7 +31,7 @@ follows:
 
 ## Why create this extension in the first place? 
 
-The goal  was to create a pptx translation that is purely
-markdown. This enables pdf output without the intermediate step of
-printing pdf from a browser. 
+The purpose was to create a pptx translation that enables pdf output
+without the intermediate step of creating html slides and printing
+from a browser.
     
