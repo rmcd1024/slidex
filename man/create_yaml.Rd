@@ -8,6 +8,7 @@ Matter}
 create_yaml(
   xml_folder,
   title_sld,
+  output_format,
   author = NULL,
   title = NULL,
   sub = NULL,

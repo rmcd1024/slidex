@@ -53,6 +53,7 @@ Suggests:
     kableExtra,
     knitr,
     testthat,
-    xaringan
+    xaringan,
+    tools
 URL: https://github.com/datalorax/slidex
 BugReports: https://github.com/datalorax/slidex/issues

@@ -9,6 +9,7 @@ write_rmd(
   rmd,
   slds,
   rels,
+  output_format,
   title_sld,
   author,
   title,

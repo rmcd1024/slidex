@@ -81,7 +81,7 @@ create_yaml <- function(xml_folder, title_sld, output_format,
                    sub,
                    auth,
                    date)
-  xaringan.yaml <- list("output:",
+  xaringan_yaml <- list("output:",
                         "  xaringan::moon_reader:",
                         css,
                         "  lib_dir: libs",
@@ -89,13 +89,15 @@ create_yaml <- function(xml_folder, title_sld, output_format,
                         paste0("    ", hls),
                         "    highlightLines: true",
                         "    countIncrementalSlides: false")
-  latex.yaml <- list("output:",
-                     "  beamer_presentation: default",
+  latex_yaml <- list("output:",
+                     "  beamer_presentation:",
+                     "    latex_engine: xelatex",
+                     "    slide_level: 2",
                      "---", "\n")
   if (output_format == "latex") {
-      header <- c(elements, latex.yaml)
+      header <- c(elements, latex_yaml)
   } else {
-      header <- c(elements, xaringan.yaml)
+      header <- c(elements, xaringan_yaml)
   }
   header <- header[!map_lgl(header, is.null)]
 

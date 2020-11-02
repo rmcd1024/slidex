@@ -14,7 +14,8 @@ convert_pptx(
   highlightStyle = "github",
   force = FALSE,
   writenotes = TRUE,
-  out_dir = "."
+  out_dir = ".",
+  output_format = c("xaringan", "latex")
 )
 }
 \arguments{
@@ -51,6 +52,8 @@ slides? Defaults to \code{TRUE}.}
 
 \item{out_dir}{Optional output directory for the folder containing the RMD
 and corresponding assets. Defaults to the current working directory.}
+
+\item{output_format}{One of "xaringan" (default) or "latex". The latter changes file references from \code{.wmf} to \code{.png} and automatically converts \code{.wmf} files to \code{.png} files if you have libreoffice installed. In either case, file extensions in the output document are changed from \code{wmf} to \code{png}}
 }
 \description{
 Extract xml from pptx

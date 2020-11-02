@@ -10,6 +10,7 @@
 #'   slides? Defaults to \code{TRUE}.
 #' @param out_dir Optional output directory for the folder containing the RMD
 #'   and corresponding assets. Defaults to the current working directory.
+#' @param output_format One of "xaringan" (default) or "latex". The latter changes file references from \code{.wmf} to \code{.png} and automatically converts \code{.wmf} files to \code{.png} files if you have libreoffice installed. In either case, file extensions in the output document are changed from \code{wmf} to \code{png}
 #' @export
 #'
 convert_pptx <- function(path, author = NULL, title = NULL, sub = NULL,
@@ -84,6 +85,19 @@ convert_pptx <- function(path, author = NULL, title = NULL, sub = NULL,
   unlink(xml, recursive = TRUE)
   file.copy(basepath, out_dir, recursive = TRUE)
   unlink(basepath, recursive = TRUE, force = TRUE)
+
+  if (system("which soffice") != 0) {
+    print(paste0("Libreoffice is not installed, wmf files are ",
+          "not converted to png"))
+    } else {
+      convimg = paste0('cd ',
+                   file.path(out_dir,
+                             tools::file_path_sans_ext(basename(rmd)),
+                             '/assets/img/'),
+                  ' && soffice --headless --convert-to png *.wmf',
+                  ' 2> /dev/null')
+      system(convimg)
+    }
 
   system(paste(Sys.getenv("R_BROWSER"),
                file.path(out_dir,

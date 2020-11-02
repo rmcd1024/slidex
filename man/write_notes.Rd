@@ -4,7 +4,7 @@
 \alias{write_notes}
 \title{Write Slide Notes}
 \usage{
-write_notes(xml_folder)
+write_notes(xml_folder, output_format = "xaringan")
 }
 \arguments{
 \item{xml_folder}{The folder containing all of the xml code from the pptx.}

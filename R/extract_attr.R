@@ -42,7 +42,7 @@ extract_image <- function(sld, rel, output_format) {
   if (output_format == 'xaringan') {
       if(length(out) == 2) {
           out <- paste0(".pull-left[", out[1], "]", "\n\n",
-                        
+
                         ".pull-right[", out[2], "]")
       }
       if(length(out) > 2) {
@@ -50,11 +50,13 @@ extract_image <- function(sld, rel, output_format) {
                       imgs, "')\nbackground-size: cover\n",
                       collapse = "\n")
       }
-      
+
   }
     if (output_format == 'latex') {
+      out <- gsub('.wmf', '.png', out, ignore.case=TRUE)
       if(length(out) == 2) {
-          out <- paste0(out[1], out[2])
+          out <- paste0(out[1], "{width=", .5^1.2*100, "%}",
+                        out[2], "{width=", .5^1.2*100, "%}")
       }
       if(length(out) > 2) {
           k <- length(out)
@@ -64,7 +66,7 @@ extract_image <- function(sld, rel, output_format) {
           }
           out <- paste0("\n\n", paste0(out, collapse = ""))
       }
-      
+
   }
 
   out
