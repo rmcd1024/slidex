@@ -1,0 +1,213 @@
+---
+title: ' A brilliant title '
+author: Daniel Anderson
+date: 2020-10-29
+output:
+  xaringan::moon_reader:
+  lib_dir: libs
+  nature:
+    highlightStyle: github
+    highlightLines: true
+    countIncrementalSlides: falseCalled from: eval(expr, p)
+debug at /data/rmcd/git/slidex/R/extract_body.R#146: pasted <- text %>% select(.data$text) %>% unnest()
+function(text) {
+    if(is.null(text)) return()
+    ##save(text, file='~/git/slidex/dev/pasted.Rdata')
+    pasted <- text %>%
+        select(.data$text) %>%
+        unnest()
+    pasted <- map(pasted, ~.[. != "\n"])
+
+  paste0(pasted$text, collapse = "\n")
+}
+<environment: 0x56254b5b16f8>
+function (object, contr, how.many, ...) 
+{
+    if (isFALSE(as.logical(Sys.getenv("_R_OPTIONS_STRINGS_AS_FACTORS_")))) 
+        object <- as.factor(object)
+    if (!nlevels(object)) 
+        stop("object not interpretable as a factor")
+    if (!missing(contr) && is.name(Xcontr <- substitute(contr))) 
+        contr <- switch(as.character(Xcontr), poly = "contr.poly", 
+            helmert = "contr.helmert", sum = "contr.sum", treatment = "contr.treatment", 
+            SAS = "contr.SAS", contr)
+    if (missing(contr)) {
+        oc <- getOption("contrasts")
+        contr <- if (length(oc) < 2L) 
+            if (is.ordered(object)) 
+                contr.poly
+            else contr.treatment
+        else oc[1 + is.ordered(object)]
+    }
+    if (missing(how.many) && missing(...)) 
+        contrasts(object) <- contr
+    else {
+        if (is.character(contr)) 
+            contr <- get(contr, mode = "function")
+        if (is.function(contr)) 
+            contr <- contr(nlevels(object), ...)
+        contrasts(object, how.many) <- contr
+    }
+    object
+}
+<bytecode: 0x56254bb011c0>
+<environment: namespace:stats>
+function (object, contr, how.many, ...) 
+{
+    if (isFALSE(as.logical(Sys.getenv("_R_OPTIONS_STRINGS_AS_FACTORS_")))) 
+        object <- as.factor(object)
+    if (!nlevels(object)) 
+        stop("object not interpretable as a factor")
+    if (!missing(contr) && is.name(Xcontr <- substitute(contr))) 
+        contr <- switch(as.character(Xcontr), poly = "contr.poly", 
+            helmert = "contr.helmert", sum = "contr.sum", treatment = "contr.treatment", 
+            SAS = "contr.SAS", contr)
+    if (missing(contr)) {
+        oc <- getOption("contrasts")
+        contr <- if (length(oc) < 2L) 
+            if (is.ordered(object)) 
+                contr.poly
+            else contr.treatment
+        else oc[1 + is.ordered(object)]
+    }
+    if (missing(how.many) && missing(...)) 
+        contrasts(object) <- contr
+    else {
+        if (is.character(contr)) 
+            contr <- get(contr, mode = "function")
+        if (is.function(contr)) 
+            contr <- contr(nlevels(object), ...)
+        contrasts(object, how.many) <- contr
+    }
+    object
+}
+<bytecode: 0x56254bb011c0>
+<environment: namespace:stats>
+
+---
+#  Here’s the title for the first slide 
+
++ This is an unusually deeply nested list, that starts with weird levels
+	+ Of bullets
+		+ And more bullets
+		+ And even more
+			+ And yes, yet more
+				+ One more super crazy deep one!
+		+ Back a level
+	+ Back to the first level
+No bulleting at all
++ New set of bullets that also don’t start at first level
+
+Called from: eval(expr, p)
+debug at /data/rmcd/git/slidex/R/extract_body.R#146: pasted <- text %>% select(.data$text) %>% unnest()
+
+---
+#  A picture! 
+
+This is some text with a picture on the right. Those are my two girls. They’re the cutest.
+![](assets/img/image1.jpg)
+
+Called from: eval(expr, p)
+debug at /data/rmcd/git/slidex/R/extract_body.R#146: pasted <- text %>% select(.data$text) %>% unnest()
+
+---
+#  Two pictures in one slide 
+
+This slide has some text and two pictures. It still works
+.pull-left[![](assets/img/image3.jpg)]
+
+.pull-right[![](assets/img/image2.jpg)]
+Called from: eval(expr, p)
+debug at /data/rmcd/git/slidex/R/extract_body.R#146: pasted <- text %>% select(.data$text) %>% unnest()
+
+---
+#  Lots of pictures! 
+
+If we have more than two pictures, it starts to not work very well, so it defaults to putting them all on their own slides as background images.
+
+---
+class: inverse
+background-image: url('assets/img/image5.jpeg')
+background-size: cover
+
+
+---
+class: inverse
+background-image: url('assets/img/image4.jpg')
+background-size: cover
+
+
+---
+class: inverse
+background-image: url('assets/img/image6.jpg')
+background-size: cover
+
+
+---
+#  A Table 
+
+
+```{r tbl5, echo = FALSE}
+tbl5 <- tibble::tribble(
+~`Variable`, ~`Coefficient`, ~`Standard Error`,
+"Intercept","250.57","0.78",
+"height","10.4","2.53",
+"weight","8.7","6.89",
+"age","0.50","0.04"
+)
+
+kableExtra::kable_styling(knitr::kable(tbl5), font_size = 18)
+```
+Called from: eval(expr, p)
+debug at /data/rmcd/git/slidex/R/extract_body.R#146: pasted <- text %>% select(.data$text) %>% unnest()
+
+---
+#  Bold and italics 
+
++ Here’s some bold text and here’s some italicized text on the same line
+	+ But yet… It parses them both, even when they’re bold and italicized!!!
+Called from: eval(expr, p)
+debug at /data/rmcd/git/slidex/R/extract_body.R#146: pasted <- text %>% select(.data$text) %>% unnest()
+
+---
+#  Links 
+
++ Links are preserved as well. For example, you can see a link to the development version of this package here .
+[here](https://github.com/datalorax/slidex)
+
+---
+#  Line Plot! 
+
+
+---
+#  Bar Plot 
+
+
+---
+#  Histogram 
+
+![](assets/img/image5.png)
+
+---
+#  Box Plot 
+
+![](assets/img/image6.png)
+
+---
+#  A brilliant flow chart 
+
+Called from: eval(expr, p)
+debug at /data/rmcd/git/slidex/R/extract_body.R#146: pasted <- text %>% select(.data$text) %>% unnest()
+
+---
+#  Two-Panel Layout 
+
++ Content on the left
+	+ And content on the right
+Called from: eval(expr, p)
+debug at /data/rmcd/git/slidex/R/extract_body.R#146: pasted <- text %>% select(.data$text) %>% unnest()
+
+---
+#  That’s all for now 
+
+Thanks for your interest!
