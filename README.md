@@ -15,7 +15,7 @@ status](https://www.r-pkg.org/badges/version/slidex)](https://cran.r-project.org
 This is a fork of `datalorax/slidex`, an impressive package that
 converts pptx files to Rmd (`xaringan`-flavored). This fork, in
 addition, converts to "latex", using the option
-`output_format="latex"`. If you ignore the output_format option, it
+`output_format="latex"`. If you ignore the `output_format` option, it
 should mimic the behavior of the original package. It also adds the
 ability to convert `wmf` and `emf` files to `png` *if* you have
 `libreoffice` installed (tested only on Linux). 
