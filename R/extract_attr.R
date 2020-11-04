@@ -52,7 +52,7 @@ extract_image <- function(sld, rel, output_format) {
       }
   }
   if (output_format == 'latex') {
-      out <- gsub('\\.wmf|\\.emf', '\\.png', out, ignore.case=TRUE)
+      out <- gsub('\\.wmf|\\.emf|\\.tiff', '\\.png', out, ignore.case=TRUE)
       if(length(out) == 2) {
           out <- paste0(out[1], "{width=", .5^1.2*100, "%}",
                         out[2], "{width=", .5^1.2*100, "%}")

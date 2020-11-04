@@ -104,6 +104,13 @@ convert_pptx <- function(path, author = NULL, title = NULL, sub = NULL,
                        ' && soffice --headless --convert-to png *.emf',
                        ' 2> /dev/null')
       system(convimg)
+      convimg = paste0('cd ',
+                       file.path(out_dir,
+                                 tools::file_path_sans_ext(basename(rmd)),
+                                 '/assets/img/'),
+                       ' && soffice --headless --convert-to png *.tiff',
+                       ' 2> /dev/null')
+      system(convimg)
     }
 
   system(paste(Sys.getenv("R_BROWSER"),
