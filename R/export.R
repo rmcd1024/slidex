@@ -89,29 +89,18 @@ convert_pptx <- function(path, author = NULL, title = NULL, sub = NULL,
   if (system("which soffice") != 0) {
     print(paste0("Libreoffice is not installed, wmf files are ",
           "not converted to png"))
-    } else {
+  } else {
+      convert_from <- c('wmf', 'emf', 'tiff')
+      for (i in convert_from) {
       convimg = paste0('cd ',
                    file.path(out_dir,
                              tools::file_path_sans_ext(basename(rmd)),
                              '/assets/img/'),
-                  ' && soffice --headless --convert-to png *.wmf',
+                  ' && soffice --headless --convert-to png *.', i,
                   ' 2> /dev/null')
       system(convimg)
-      convimg = paste0('cd ',
-                       file.path(out_dir,
-                                 tools::file_path_sans_ext(basename(rmd)),
-                                 '/assets/img/'),
-                       ' && soffice --headless --convert-to png *.emf',
-                       ' 2> /dev/null')
-      system(convimg)
-      convimg = paste0('cd ',
-                       file.path(out_dir,
-                                 tools::file_path_sans_ext(basename(rmd)),
-                                 '/assets/img/'),
-                       ' && soffice --headless --convert-to png *.tiff',
-                       ' 2> /dev/null')
-      system(convimg)
-    }
+      }
+  }
 
   system(paste(Sys.getenv("R_BROWSER"),
                file.path(out_dir,
